@@ -643,8 +643,6 @@ const OrderCreateComponent = () => {
                 </div>
               </div>
             </div>
-
-
           }
         </div>
       </div>

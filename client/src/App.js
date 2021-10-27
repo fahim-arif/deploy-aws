@@ -16,6 +16,7 @@ import AddStore from './components/admin/store/AddStore';
 import EditStore from './components/admin/store/EditStore';
 import ListStore from './components/admin/store/ListStore';
 
+// demo
 
 import AddSlider from './components/admin/slider/AddSlider';
 import EditSlider from './components/admin/slider/EditSlider';

@@ -217,3 +217,12 @@ padding: 0 10px;
 .create_order_btn a {
   color: #fff;
 }
+
+/*  style={{padding:'11px', border:"1px solid #ad9f9f !important", borderRadius:'5px!important',borderRight:"14px solid #465ac1!important"}} */
+.new_border {
+
+  border-radius: 5px !important;
+  border: 1px solid #ad9f9f !important;
+  border-right: 14px solid #aaaec5 !important;
+  list-style: none;
+}

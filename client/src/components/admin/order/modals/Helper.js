@@ -423,10 +423,10 @@ export default function Helper({
       return;
     }
 
-        if (!qty) {
+        if (!qty || qty < 1) {
       Toast.fire({
         type: 'error',
-        title: 'Please Add Quantity First, then click on the add button',
+        title: 'Add A Quantity Value Greater Than 0',
       })
       return;
     }
@@ -454,8 +454,8 @@ export default function Helper({
             var mappingType = value[0].mappingType;
 
             if (mappingType === "dropdown") {
-              fields.push(<h6 key={key}>{key}</h6>)
-              fields.push(<select id="select-el" className="combo combo-input" onChange={(e) => onSelectDropdown(e, key)}>
+              fields.push(<h6 style={{paddingLeft:'40px'}} key={key}>{key}</h6>)
+              fields.push(<select style={{marginLeft:'40px', padding:'7px', minWidth:'260px'}} id="select-el" className="combo combo-input" onChange={(e) => onSelectDropdown(e, key)}>
                 <option value="">Select</option>
                 {value.sort(function (a, b) {
                   return new Date(a.date) - new Date(b.date);
@@ -466,13 +466,21 @@ export default function Helper({
               </select>)
 
             }
+//    margin-left: 40px;
+    // padding: 7px;
+    // min-width: 260px;
+
+
+            
+
+
             if (mappingType === "image+text") {
               fields.push(<ul className="profile-g pointer">
                 {value.sort(function (a, b) {
                   return new Date(a.date) - new Date(b.date);
                 }).map(attrres => {
                   var findSelected = selectedAttribute.find(x => x.value === attrres.mappingValue)
-                  return <li className={findSelected ? "border" : null} onClick={() => onSelectList(key, attrres.mappingValue, attrres.additionalPrice)}>
+                  return <li style={{padding:'11px', listStyle:'none', border:"1px solid #ad9f9f !important", borderRadius:'5px!important',borderRight:"14px solid #465ac1!important"}} className={findSelected ? "border new_border" : null} onClick={() => onSelectList(key, attrres.mappingValue, attrres.additionalPrice)}>
                     <img src={`${IMAGE_URL}${attrres.photoUrl}`} />
                     <span>{attrres.mappingLabel} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span>
                   </li>
@@ -485,7 +493,7 @@ export default function Helper({
                   return new Date(a.date) - new Date(b.date);
                 }).map(attrres => {
                   var findSelected = selectedAttribute.find(x => x.value === attrres.mappingValue)
-                  return <li className={findSelected ? "border" : null} onClick={() => onSelectList(key, attrres.mappingValue, attrres.additionalPrice)}><span>{attrres.mappingLabel} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span></li>
+                  return <li style={{padding:'11px', border:"1px solid #ad9f9f!important", borderRadius:'5px!important',borderRight:"14px solid #465ac1!important"}} className={findSelected ? "border new_border" : null} onClick={() => onSelectList(key, attrres.mappingValue, attrres.additionalPrice)}><span>{attrres.mappingLabel} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span></li>
                 })}
               </ul>)
             }
@@ -514,7 +522,7 @@ export default function Helper({
           <label style={{fontSize:'18px', fontWeight:'600', marginTop:'16px'}} htmlFor={`ac-${index}`}><span>{index + 1}</span> {result.parentAttributeName}</label>
           <article>
             <div className="row">
-              <div className="col-md-12">
+              <div  className="col-md-12">
                 {fields}
               </div>
             </div>
@@ -533,9 +541,9 @@ export default function Helper({
     var datas = data.map(result => {
       if (result.type === "dropdown") {
         return <React.Fragment>
-          <h6 key={parentKey} style={{ marginTop: 20 }}>{result.label}</h6>
-          <select id="select-el" className="combo combo-input" onChange={(e) => onSelectDropdown(e, result.label, parentKey)}>
-            <option value="">Select</option>
+          <h6 key={parentKey} style={{ marginTop: 20, paddingLeft:'40px' }}>{result.label}</h6>
+          <select style={{marginLeft:'40px', padding:'7px', minWidth:'260px'}} id="select-el" className="combo combo-input" onChange={(e) => onSelectDropdown(e, result.label, parentKey)}>
+            <option  value="">Select</option>
             {result.list.map(attrres => {
               var findSelected = selectedAttribute.find(x => x.value === attrres.value)
               return <option selected={findSelected ? true : null} value={attrres.value} data-price={attrres.additionalPrice}>{attrres.label} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</option>
@@ -548,7 +556,7 @@ export default function Helper({
           {result.list.map(attrres => {
             var findSelected = selectedAttribute.find(x => x.value === attrres.mappingValue)
 
-            return <li className={findSelected ? "border" : null} onClick={() => onSelectList(attrres.label, attrres.value, attrres.additionalPrice, parentKey)}><img src={`${IMAGE_URL}${attrres.photoUrl}`} /><span>{attrres.mappingLabel} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span></li>
+            return <li style={{padding:'11px', border:"1px solid #ad9f9f!important", borderRadius:'5px!important',borderRight:"14px solid #465ac1!important"}} className={findSelected ? "border new_border" : null} onClick={() => onSelectList(attrres.label, attrres.value, attrres.additionalPrice, parentKey)}><img src={`${IMAGE_URL}${attrres.photoUrl}`} /><span>{attrres.mappingLabel} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span></li>
           })}
         </ul>
       }
@@ -556,7 +564,7 @@ export default function Helper({
         return <ul className="profile-g pointer" style={{ marginTop: 20 }}>
           {result.list.map(attrres => {
             var findSelected = selectedAttribute.find(x => x.value === attrres.value)
-            return <li className={findSelected ? "border" : null} onClick={() => onSelectList(attrres.label, attrres.value, attrres.additionalPrice, parentKey)}><span style={{ width: 25, height: 25, backgroundColor: attrres.value, borderColor: "#fff" }}></span><span>{attrres.label} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span></li>
+            return <li style={{padding:'11px', border:"1px solid #ad9f9f!important", borderRadius:'5px!important',borderRight:"14px solid #465ac1!important"}} className={findSelected ? "border new_border" : null} onClick={() => onSelectList(attrres.label, attrres.value, attrres.additionalPrice, parentKey)}><span style={{ width: 25, height: 25, backgroundColor: attrres.value, borderColor: "#fff" }}></span><span>{attrres.label} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span></li>
           })}
         </ul>
       }

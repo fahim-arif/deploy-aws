@@ -32,7 +32,10 @@ let attributes;
 let result = "";
 
 const OrderCreateComponent = () => {
+
   const dispatch = useDispatch();
+
+  const userModalRef = useRef();
 
   const { listproduct } = useSelector((state) => state.product);
   const { listuser, userloading, adduser } = useSelector((state) => state.user);
@@ -61,7 +64,7 @@ const OrderCreateComponent = () => {
   const [productId, setProductId] = useState("");
   const [productSearchInput, SetProductSearchInput] = useState("");
   const [showUser, setShowUser] = useState(false);
-  const [showUserModal, setShowUserModal] = useState(false);
+  const [showUserModal, setShowUserModal] = useState(true);
   const [userSearchInput, setUserSearchInput] = useState('')
   const [numStock, setNumStock] = useState([])
   const [qty, setQty] = useState(0)
@@ -100,10 +103,14 @@ const OrderCreateComponent = () => {
         type: "success",
         title: "An New user has been created",
       });
+      setShowUserModal(false)
+      userModalRef.current.click();
+      setUsername('')
+      setEmail('')
+      setPassword('')
+      setMobile("")
     };
 
-    // document.getElementById("modal_btn").click();
-    // elementRef.current.click();
   }, [adduser]);
   const createUserHandler = async (e) => {
     e.preventDefault();
@@ -212,27 +219,6 @@ const OrderCreateComponent = () => {
     e.preventDefault()
     dispatch(searchUser(userSearchInput))
   }
-  const handleIncreaseQty = (e, idx) => {
-    // let counter = numStock;
-    // counter[idx] += +1;
-    // console.log(counter)
-    // setNumStock(counter)
-    // console.log('bnow')
-    // console.log(numStock[0][idx])
-    let counter = numStock;
-    counter[0][idx] += 1;
-    // counter.idx += +1;
-    // console.log(numStock.0)
-    // console.log(counter)
-    setNumStock(counter)
-    console.log(numStock)
-    console.log(numStock[0][idx])
-
-  }
-  const handleDecreaseQty = (e, idx) => {
-    console.log(numStock)
-  }
-  console.log(numStock)
   return (
     <React.Fragment>
       <Helper
@@ -291,21 +277,7 @@ const OrderCreateComponent = () => {
           </div>
           {/* After Selecting a customer */}
           {/* <div className='customer_information_container'>
-            <div className='customer_info_heading'>
-              <div className='customer_info_title'>Customer</div>
-              <i className='fas fa-times'></i>
-            </div>
-            <div className='contact_info_email_container'>
-              <div className='contact_info_email_heading'>
-                <div className='contact_info_title'>CONTACT INFORMATION</div>
-              </div>
-              <span className='contact_info_email'>
-                {" "}
-                fahim1.618555@gmail.com
-              </span>
-            </div>
-          </div> */}
-          {/* Before selecting a user */}
+        
           {/* Before selecting a user */}
           <div className='col-lg-5 pt-4 order_user_list_container'>
             <h4>Find or create a customer</h4>
@@ -362,44 +334,14 @@ const OrderCreateComponent = () => {
 
                           <td>
                             <div className='order_create_ item_container'>
-                              {/* {qty} */}
                               <input
                                 onChange={(e) => setQty(e.target.value)}
-                                // value={numStock[0][idx]}
                                 className='order_create_input'
                               />
-                              {/* <div className='order_create_button_container'>
-                                <button
-                                onClick={(e) => setQty((prev) => prev + +qty)
-                                  // onClick={(e) =>handleIncreaseQty(e,idx)
-                                  }
-                                  className='order_create_plus_btn'
-                                >
-                                  +
-                                </button>
-                                <button
-                                  onClick={(e) => handleDecreaseQty(e,idx)
-                                    
-                                  }
-                                  className='order_create_minus_btn'
-                                >
-                                  -
-                                </button>
-                              </div> */}
                             </div>
                           </td>
                           <td>
                             ${product.price}
-                            {/* <div className='form-check'>
-                              <input
-                                onClick={() => addProductHandler(product._id)}
-                                className='form-check-input'
-                                type='checkbox'
-                                value=''
-                                id='flexCheckDefault'
-                              />
-                              <label className='form-check-label'>Add</label>
-                            </div> */}
                           </td>
                           <td>
                             <div className='form-check'>
@@ -412,9 +354,6 @@ const OrderCreateComponent = () => {
                               />
                               <label className='form-check-label'>Add</label>
                             </div>
-                            {/* <div className='order_create_action_icon'>
-                              <i className='fas fa-times'></i>
-                            </div> */}
                           </td>
                         </tr>
                       );
@@ -441,15 +380,13 @@ const OrderCreateComponent = () => {
                 className='order_create_user_dropdown'
               >
                 <div className='user_create_container' data-toggle="modal" data-target="#userModal"
-                  onClick={() => setShowUserModal(true)}>
+                  onClick={() => setShowUserModal(true)}
+                >
                   <i className='far fa-plus-square'></i>
                   <span className='user_create_text'>
                     Create a new customer
                   </span>
                 </div>
-                {/* <div className='user_dropdown_selected'>
-                fahim1.618555@gmail.com
-              </div> */}
               </div>
             ) : null}
 
@@ -554,27 +491,6 @@ const OrderCreateComponent = () => {
                     </td>
                     <td>
                       ${cart.length > 0 ? totalCost : 0}
-                      {/* ${cart.length > 0 ? cart.map((result) => (parseFloat(result.quantity) * parseFloat(result.price))) : 0} */}
-                      {/* {totalCost} */}
-                      {/* {attributeList.length > 0 ? (
-                        <p>
-                          $
-                          {
-                            totalCost
-                            // Number(
-                            //   attributeList.reduce(
-                            //     (acc, item) => Number(acc) + Number(item.price),
-                            //     Number(discount)
-                            //   )
-                            //   // .slice(-1)
-                            //   // .slice()
-                            // )
-                          }
-                        </p>
-                      ) : (
-                        <p>${subtotal + discount}</p>
-                      )} */}
-                      {/* <p>${subtotal + discount}</p> */}
                     </td>
                   </tr>
                 </tbody>
@@ -636,7 +552,7 @@ const OrderCreateComponent = () => {
 
                     </div>
                     <div class="modal-footer">
-                      <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" ref={userModalRef} className="btn btn-secondary" data-dismiss="modal">Close</button>
                       <button type="button" className="btn btn-primary" type="submit">Create</button>
                     </div>
                   </form>

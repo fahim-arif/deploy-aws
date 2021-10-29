@@ -481,7 +481,7 @@ export default function Helper({
                 }).map(attrres => {
                   var findSelected = selectedAttribute.find(x => x.value === attrres.mappingValue)
                   return <li style={{padding:'11px', listStyle:'none', border:"1px solid #ad9f9f !important", borderRadius:'5px!important',borderRight:"14px solid #465ac1!important"}} className={findSelected ? "border new_border" : null} onClick={() => onSelectList(key, attrres.mappingValue, attrres.additionalPrice)}>
-                    <img src={`${IMAGE_URL}${attrres.photoUrl}`} />
+                    <img style={{maxWidth:'75px'}} src={`${IMAGE_URL}${attrres.photoUrl}`} />
                     <span>{attrres.mappingLabel} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span>
                   </li>
                 })}
@@ -556,7 +556,7 @@ export default function Helper({
           {result.list.map(attrres => {
             var findSelected = selectedAttribute.find(x => x.value === attrres.mappingValue)
 
-            return <li style={{padding:'11px', border:"1px solid #ad9f9f!important", borderRadius:'5px!important',borderRight:"14px solid #465ac1!important"}} className={findSelected ? "border new_border" : null} onClick={() => onSelectList(attrres.label, attrres.value, attrres.additionalPrice, parentKey)}><img src={`${IMAGE_URL}${attrres.photoUrl}`} /><span>{attrres.mappingLabel} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span></li>
+            return <li style={{padding:'11px', border:"1px solid #ad9f9f!important", borderRadius:'5px!important',borderRight:"14px solid #465ac1!important"}} className={findSelected ? "border new_border" : null} onClick={() => onSelectList(attrres.label, attrres.value, attrres.additionalPrice, parentKey)}><img style={{maxWidth:'75px'}} src={`${IMAGE_URL}${attrres.photoUrl}`} /><span>{attrres.mappingLabel} {parseInt(attrres.additionalPrice) > 0 && `[+ $ ${attrres.additionalPrice} ]`}</span></li>
           })}
         </ul>
       }
